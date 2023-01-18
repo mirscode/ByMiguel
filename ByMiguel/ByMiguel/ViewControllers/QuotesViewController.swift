@@ -9,7 +9,7 @@ import UIKit
 
 class QuotesViewController: UIViewController {
     
-    private var quotesManager = QuotesManager()
+    private var quotesViewModel = QuotesViewModel()
     
     private lazy var quoteLabel: UILabel = {
         let label = UILabel()
@@ -58,7 +58,9 @@ class QuotesViewController: UIViewController {
         view.addSubview(quoteLabel)
         view.addSubview(buttonStackView)
         view.backgroundColor = UIColor(red: 253, green: 226, blue: 212)
-        quoteLabel.text = quotesManager.getCurrentQuote().message
+        
+        let quote = quotesViewModel.getCurrentQuote()
+        quoteLabel.text = quote.message
         addConstraints()
     }
     
@@ -79,12 +81,12 @@ class QuotesViewController: UIViewController {
     }
     
     @objc private func showNextQuote() {
-        let quote = quotesManager.getNextQuote()
+        let quote = quotesViewModel.getNextQuote()
         quoteLabel.text = quote.message
     }
     
     @objc private func showPreviousQuote() {
-        let quote = quotesManager.getPreviousQuote()
+        let quote = quotesViewModel.getPreviousQuote()
         quoteLabel.text = quote.message
     }
 }

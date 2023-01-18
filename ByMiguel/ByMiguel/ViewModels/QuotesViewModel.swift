@@ -7,7 +7,7 @@
 
 import Foundation
 
-class QuotesManager {
+class QuotesViewModel {
     private let currentQuoteIndexKey = "currentQuoteIndex"
     private var quotes = [Quote]()
     private var currentQuoteIndex: Int
