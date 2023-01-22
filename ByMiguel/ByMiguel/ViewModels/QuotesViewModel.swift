@@ -1,15 +1,10 @@
-//
-//  Quotes.swift
-//  ByMiguel
-//
-//  Created by Mir Ahmed on 9/29/22.
-//
-
 import Foundation
 
 class QuotesViewModel {
     private let currentQuoteIndexKey = "currentQuoteIndex"
-    private var quotes = [Quote]()
+    // change back to private
+    var quotes = [Quote]()
+    private var bookmarkQuotes = [Quote]()
     private var currentQuoteIndex: Int
     
     init() {
@@ -47,6 +42,10 @@ class QuotesViewModel {
         
         saveCurrentQuoteIndexKey()
         return quotes[currentQuoteIndex]
+    }
+    
+    func bookmarkQuote(_ quote: Quote) {
+        bookmarkQuotes.append(quote)
     }
     
     private func saveCurrentQuoteIndexKey() {
