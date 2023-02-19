@@ -2,12 +2,11 @@ import Foundation
 
 class QuotesViewModel {
     private let storage = Storage()
+    private var bookmarkedQuotesIds = Set<Int>()
+    private var currentQuoteIndex: Int
 
     var quotes = [Quote]()
     var bookmarkedQuotes = [Quote]()
-    
-    private var bookmarkedQuotesIds = Set<Int>()
-    private var currentQuoteIndex: Int
     
     init() {
         let fileName = "quotes"

@@ -1,10 +1,3 @@
-//
-//  Quote.swift
-//  ByMiguel
-//
-//  Created by Mir Ahmed on 9/29/22.
-//
-
 import Foundation
 
 struct Quote: Codable {

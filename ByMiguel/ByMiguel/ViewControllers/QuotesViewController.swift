@@ -1,8 +1,7 @@
 import UIKit
 
 class QuotesViewController: UIViewController {
-    
-    private var quotesViewModel = QuotesViewModel()
+    private let quotesViewModel = QuotesViewModel()
     
     private lazy var quoteLabel: UILabel = {
         let label = UILabel()
@@ -63,27 +62,6 @@ class QuotesViewController: UIViewController {
         setupViews()
     }
     
-    @objc private func showNextQuote() {
-        let quote = quotesViewModel.getNextQuote()
-        quoteLabel.text = quote.message
-    }
-    
-    @objc private func showPreviousQuote() {
-        let quote = quotesViewModel.getPreviousQuote()
-        quoteLabel.text = quote.message
-    }
-    
-    @objc private func bookmarkQuote() {
-        let quote = quotesViewModel.getCurrentQuote()
-        quotesViewModel.bookmarkQuote(quote)
-        print(quote.message)
-        
-        let bookmarkQuotesTableViewController = BookmarkQuotesTableViewController()
-        bookmarkQuotesTableViewController.bookmarkQuotes = quotesViewModel.bookmarkedQuotes
-        let navigationController = UINavigationController(rootViewController: bookmarkQuotesTableViewController)
-        present(navigationController, animated: true)
-    }
-    
     private func setupViews() {
         view.addSubview(quoteLabel)
         view.addSubview(buttonStackView)
@@ -109,5 +87,28 @@ class QuotesViewController: UIViewController {
             buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25)
         ])
+    }
+}
+
+extension QuotesViewController {
+    @objc private func showNextQuote() {
+        let quote = quotesViewModel.getNextQuote()
+        quoteLabel.text = quote.message
+    }
+    
+    @objc private func showPreviousQuote() {
+        let quote = quotesViewModel.getPreviousQuote()
+        quoteLabel.text = quote.message
+    }
+    
+    @objc private func bookmarkQuote() {
+        let quote = quotesViewModel.getCurrentQuote()
+        quotesViewModel.bookmarkQuote(quote)
+        print(quote.message)
+        
+        let bookmarkQuotesTableViewController = BookmarkQuotesTableViewController()
+        bookmarkQuotesTableViewController.bookmarkQuotes = quotesViewModel.bookmarkedQuotes
+        let navigationController = UINavigationController(rootViewController: bookmarkQuotesTableViewController)
+        present(navigationController, animated: true)
     }
 }

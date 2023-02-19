@@ -68,6 +68,7 @@
 		389A166F28E2868D00B69CB7 /* ByMiguel */ = {
 			isa = PBXGroup;
 			children = (
+				38F8D1EA29A2C63E0084409F /* Storage */,
 				389E1220297D9A8400BE1F97 /* Extensions */,
 				389E121929787BC700BE1F97 /* ViewModels */,
 				389A168C28E6C3E500B69CB7 /* ViewControllers */,
@@ -78,7 +79,6 @@
 				389A167B28E2868E00B69CB7 /* LaunchScreen.storyboard */,
 				389A167E28E2868E00B69CB7 /* Info.plist */,
 				38B39258296FE62000BBE263 /* quotes.json */,
-				38F8D1E829A2BA640084409F /* Storage.swift */,
 			);
 			path = ByMiguel;
 			sourceTree = "<group>";
@@ -123,6 +123,14 @@
 				389E1221297D9AAA00BE1F97 /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		38F8D1EA29A2C63E0084409F /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				38F8D1E829A2BA640084409F /* Storage.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
