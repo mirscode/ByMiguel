@@ -1,10 +1,12 @@
 import Foundation
 
 class QuotesViewModel {
-    private let currentQuoteIndexKey = "currentQuoteIndex"
-    // change back to private
+    private let storage = Storage()
+
     var quotes = [Quote]()
-    private var bookmarkQuotes = [Quote]()
+    var bookmarkedQuotes = [Quote]()
+    
+    private var bookmarkedQuotesIds = Set<Int>()
     private var currentQuoteIndex: Int
     
     init() {
@@ -14,8 +16,10 @@ class QuotesViewModel {
         if let data = data, let quotesList = parse(data: data) {
             self.quotes = quotesList.quotes
         }
-
-        currentQuoteIndex = UserDefaults.standard.integer(forKey: currentQuoteIndexKey)
+        
+        currentQuoteIndex = storage.loadCurrentQuoteIndex()
+        bookmarkedQuotesIds = storage.load()
+        bookmarkedQuotes = quotes.filter { bookmarkedQuotesIds.contains($0.identifier) }
     }
     
     func getCurrentQuote() -> Quote {
@@ -29,7 +33,7 @@ class QuotesViewModel {
             currentQuoteIndex = 0
         }
         
-        saveCurrentQuoteIndexKey()
+        storage.saveCurrentQuoteIndex(currentQuoteIndex)
         return quotes[currentQuoteIndex]
     }
     
@@ -40,17 +44,15 @@ class QuotesViewModel {
             currentQuoteIndex = quotes.count - 1
         }
         
-        saveCurrentQuoteIndexKey()
+        storage.saveCurrentQuoteIndex(currentQuoteIndex)
         return quotes[currentQuoteIndex]
     }
     
     func bookmarkQuote(_ quote: Quote) {
-        bookmarkQuotes.append(quote)
-    }
-    
-    private func saveCurrentQuoteIndexKey() {
-        DispatchQueue.main.async {
-            UserDefaults.standard.set(self.currentQuoteIndex, forKey: self.currentQuoteIndexKey)
-        }
+        guard !bookmarkedQuotesIds.contains(quote.identifier) else { return }
+        
+        bookmarkedQuotesIds.insert(quote.identifier)
+        bookmarkedQuotes.append(quote)
+        storage.save(quoteIds: bookmarkedQuotesIds)
     }
 }

@@ -79,7 +79,7 @@ class QuotesViewController: UIViewController {
         print(quote.message)
         
         let bookmarkQuotesTableViewController = BookmarkQuotesTableViewController()
-        bookmarkQuotesTableViewController.bookmarkQuotes = quotesViewModel.quotes
+        bookmarkQuotesTableViewController.bookmarkQuotes = quotesViewModel.bookmarkedQuotes
         let navigationController = UINavigationController(rootViewController: bookmarkQuotesTableViewController)
         present(navigationController, animated: true)
     }
