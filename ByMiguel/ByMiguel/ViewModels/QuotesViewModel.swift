@@ -54,4 +54,10 @@ class QuotesViewModel {
         bookmarkedQuotes.append(quote)
         storage.save(quoteIds: bookmarkedQuotesIds)
     }
+    
+    func unbookmarkQuote(_ quote: Quote) {
+        bookmarkedQuotesIds.remove(quote.identifier)
+        bookmarkedQuotes = bookmarkedQuotes.filter { $0.identifier != quote.identifier }
+        storage.save(quoteIds: bookmarkedQuotesIds)
+    }
 }
