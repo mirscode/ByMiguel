@@ -109,7 +109,6 @@ extension QuotesViewController {
     
     private func presentBookmarkQuotesTableViewController() {
         let bookmarkQuotesTableViewController = BookmarkQuotesTableViewController()
-        bookmarkQuotesTableViewController.bookmarkedQuotes = quotesViewModel.bookmarkedQuotes
         let navigationController = UINavigationController(rootViewController: bookmarkQuotesTableViewController)
         present(navigationController, animated: true)
     }
