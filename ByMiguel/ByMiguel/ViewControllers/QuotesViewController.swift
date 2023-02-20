@@ -19,10 +19,12 @@ class QuotesViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
-        button.setTitle("PREV", for: .normal)
-        button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(showPreviousQuote), for: .touchUpInside)
+        
+        let backChevronImage = UIImage(systemName: "chevron.backward")
+        button.setImage(backChevronImage, for: .normal)
+        button.imageView?.tintColor = .black
         return button
     }()
     
@@ -31,10 +33,12 @@ class QuotesViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
-        button.setTitle("NEXT", for: .normal)
-        button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(showNextQuote), for: .touchUpInside)
+        
+        let forwardChevronImage = UIImage(systemName: "chevron.forward")
+        button.setImage(forwardChevronImage, for: .normal)
+        button.imageView?.tintColor = .black
         return button
     }()
     
@@ -43,10 +47,12 @@ class QuotesViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
-        button.setTitle("FAV", for: .normal)
-        button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(bookmarkQuote), for: .touchUpInside)
+        
+        let bookmarkImage = UIImage(systemName: "bookmark")
+        button.setImage(bookmarkImage, for: .normal)
+        button.imageView?.tintColor = .black
         return button
     }()
     
