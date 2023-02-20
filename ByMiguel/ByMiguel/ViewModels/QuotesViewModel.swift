@@ -1,16 +1,12 @@
-//
-//  Quotes.swift
-//  ByMiguel
-//
-//  Created by Mir Ahmed on 9/29/22.
-//
-
 import Foundation
 
 class QuotesViewModel {
-    private let currentQuoteIndexKey = "currentQuoteIndex"
-    private var quotes = [Quote]()
+    private let storage = Storage()
+    private var bookmarkedQuotesIds = Set<Int>()
     private var currentQuoteIndex: Int
+
+    var quotes = [Quote]()
+    var bookmarkedQuotes = [Quote]()
     
     init() {
         let fileName = "quotes"
@@ -19,8 +15,10 @@ class QuotesViewModel {
         if let data = data, let quotesList = parse(data: data) {
             self.quotes = quotesList.quotes
         }
-
-        currentQuoteIndex = UserDefaults.standard.integer(forKey: currentQuoteIndexKey)
+        
+        currentQuoteIndex = storage.loadCurrentQuoteIndex()
+        bookmarkedQuotesIds = storage.load()
+        bookmarkedQuotes = quotes.filter { bookmarkedQuotesIds.contains($0.identifier) }
     }
     
     func getCurrentQuote() -> Quote {
@@ -34,7 +32,7 @@ class QuotesViewModel {
             currentQuoteIndex = 0
         }
         
-        saveCurrentQuoteIndexKey()
+        storage.saveCurrentQuoteIndex(currentQuoteIndex)
         return quotes[currentQuoteIndex]
     }
     
@@ -45,13 +43,21 @@ class QuotesViewModel {
             currentQuoteIndex = quotes.count - 1
         }
         
-        saveCurrentQuoteIndexKey()
+        storage.saveCurrentQuoteIndex(currentQuoteIndex)
         return quotes[currentQuoteIndex]
     }
     
-    private func saveCurrentQuoteIndexKey() {
-        DispatchQueue.main.async {
-            UserDefaults.standard.set(self.currentQuoteIndex, forKey: self.currentQuoteIndexKey)
-        }
+    func bookmarkQuote(_ quote: Quote) {
+        guard !bookmarkedQuotesIds.contains(quote.identifier) else { return }
+        
+        bookmarkedQuotesIds.insert(quote.identifier)
+        bookmarkedQuotes.append(quote)
+        storage.save(quoteIds: bookmarkedQuotesIds)
+    }
+    
+    func unbookmarkQuote(_ quote: Quote) {
+        bookmarkedQuotesIds.remove(quote.identifier)
+        bookmarkedQuotes = bookmarkedQuotes.filter { $0.identifier != quote.identifier }
+        storage.save(quoteIds: bookmarkedQuotesIds)
     }
 }
