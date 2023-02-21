@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class QuotesViewModel {
     private let storage = Storage()
@@ -59,5 +60,9 @@ class QuotesViewModel {
         bookmarkedQuotesIds.remove(quote.identifier)
         bookmarkedQuotes = bookmarkedQuotes.filter { $0.identifier != quote.identifier }
         storage.save(quoteIds: bookmarkedQuotesIds)
+    }
+    
+    func getBookmarkState() -> UIButton.State {
+        return bookmarkedQuotesIds.contains(quotes[currentQuoteIndex].identifier) ? .selected : .normal
     }
 }
