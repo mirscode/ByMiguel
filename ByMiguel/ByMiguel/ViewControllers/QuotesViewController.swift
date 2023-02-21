@@ -17,7 +17,6 @@ class QuotesViewController: UIViewController {
     private lazy var previousButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(showPreviousQuote), for: .touchUpInside)
@@ -31,7 +30,6 @@ class QuotesViewController: UIViewController {
     private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(showNextQuote), for: .touchUpInside)
@@ -45,14 +43,9 @@ class QuotesViewController: UIViewController {
     private lazy var bookmarkButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
         button.layer.cornerRadius = 20
-        button.addTarget(self, action: #selector(bookmarkQuote), for: .touchUpInside)
-        
-        let bookmarkImage = UIImage(systemName: "bookmark")
-        button.setImage(bookmarkImage, for: .normal)
-        button.imageView?.tintColor = .black
+        button.addTarget(self, action: #selector(handleBookmarkButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -75,7 +68,17 @@ class QuotesViewController: UIViewController {
         
         let quote = quotesViewModel.getCurrentQuote()
         quoteLabel.text = quote.message
+        refreshBookmarkButton()
+        
         addConstraints()
+    }
+    
+    private func refreshBookmarkButton() {
+        let state = quotesViewModel.getBookmarkState()
+        let imageName = state == .normal ? "bookmark" : "bookmark.fill"
+        let bookmarkImage = UIImage(systemName: imageName)
+        bookmarkButton.setImage(bookmarkImage, for: .normal)
+        bookmarkButton.imageView?.tintColor = .black
     }
     
     private func addConstraints() {
@@ -100,22 +103,34 @@ extension QuotesViewController {
     @objc private func showNextQuote() {
         let quote = quotesViewModel.getNextQuote()
         quoteLabel.text = quote.message
+        refreshBookmarkButton()
     }
     
     @objc private func showPreviousQuote() {
         let quote = quotesViewModel.getPreviousQuote()
         quoteLabel.text = quote.message
+        refreshBookmarkButton()
     }
     
-    @objc private func bookmarkQuote() {
+    @objc private func handleBookmarkButtonPressed() {
         let quote = quotesViewModel.getCurrentQuote()
-        quotesViewModel.bookmarkQuote(quote)
+        let state = quotesViewModel.getBookmarkState()
+        
+        if state == .normal {
+            quotesViewModel.bookmarkQuote(quote)
+        } else if state == .selected {
+            quotesViewModel.unbookmarkQuote(quote)
+        }
+        
+        refreshBookmarkButton()
         presentBookmarkQuotesTableViewController()
     }
     
     private func presentBookmarkQuotesTableViewController() {
         let bookmarkQuotesTableViewController = BookmarkQuotesTableViewController()
+        bookmarkQuotesTableViewController.quotesViewModel = quotesViewModel
         let navigationController = UINavigationController(rootViewController: bookmarkQuotesTableViewController)
+        navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
 }
