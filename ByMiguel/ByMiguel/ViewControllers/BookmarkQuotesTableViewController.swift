@@ -1,8 +1,9 @@
 import UIKit
 
 class BookmarkQuotesTableViewController: UITableViewController {
+    private let quotesViewModel = QuotesViewModel()
     private let cellId = "BookmarkQuoteCellId"
-    var bookmarkQuotes = [Quote]()
+    var bookmarkedQuotes = [Quote]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,13 +22,22 @@ class BookmarkQuotesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookmarkQuotes.count
+        return bookmarkedQuotes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! BookmarkQuoteCell
-        let bookmarkQuote = bookmarkQuotes[indexPath.row]
+        let bookmarkQuote = bookmarkedQuotes[indexPath.row]
         cell.configure(quoteMessage: bookmarkQuote.message)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        
+        let quoteToRemove = bookmarkedQuotes[indexPath.row]
+        bookmarkedQuotes.remove(at: indexPath.row)
+        quotesViewModel.unbookmarkQuote(quoteToRemove)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
