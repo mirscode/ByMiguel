@@ -3,7 +3,9 @@ import UIKit
 class BookmarkQuotesTableViewController: UITableViewController {
     private let quotesViewModel = QuotesViewModel()
     private let cellId = "BookmarkQuoteCellId"
-    var bookmarkedQuotes = [Quote]()
+    private lazy var bookmarkedQuotes: [Quote] = {
+        return quotesViewModel.bookmarkedQuotes
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
