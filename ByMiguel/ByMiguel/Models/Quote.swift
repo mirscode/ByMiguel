@@ -16,6 +16,9 @@ struct Quotes: Codable {
     var quotes: [Quote]
 }
 
+/**
+ TODO: Move these helper functions to their own class.
+ */
 func parse(data: Data) -> Quotes? {
     do {
         let decodedData = try JSONDecoder().decode(Quotes.self, from: data)
