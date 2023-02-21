@@ -1,0 +1,42 @@
+//
+//  Quote.swift
+//  ByMiguel
+//
+//  Created by Mir Ahmed on 9/29/22.
+//
+
+import Foundation
+
+struct Quote: Codable {
+    var identifier: Int
+    var message: String
+}
+
+struct Quotes: Codable {
+    var quotes: [Quote]
+}
+
+func parse(data: Data) -> Quotes? {
+    do {
+        let decodedData = try JSONDecoder().decode(Quotes.self, from: data)
+        return decodedData
+    } catch {
+        print("error: \(error)")
+    }
+    
+    return nil
+}
+
+func readJsonFile(forFileName fileName: String) -> Data? {
+    do {
+        if let filePath = Bundle.main.path(forResource: fileName, ofType: "json") {
+            let fileUrl = URL(fileURLWithPath: filePath)
+            let data = try Data(contentsOf: fileUrl)
+            return data
+        }
+    } catch {
+        print("error: \(error)")
+    }
+    
+    return nil
+}
