@@ -55,6 +55,28 @@ class QuotesViewController: UIViewController {
         stackView.spacing = 8
         return stackView
     }()
+    
+    private lazy var menuItems: [UIAction] = {
+        let showBookmarks = UIAction(title: "Show Bookmarks", handler: { (_) in
+            self.presentBookmarkQuotesTableViewController()
+        })
+        return [showBookmarks]
+    }()
+    
+    private lazy var menu = UIMenu(children: menuItems)
+
+    private lazy var menuButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.menu = menu
+        button.showsMenuAsPrimaryAction = true
+        
+        let ellipsisImage = UIImage(systemName: "ellipsis.circle")
+        button.setImage(ellipsisImage, for: .normal)
+        button.imageView?.tintColor = .black
+        button.imageView?.backgroundColor = UIColor(red: 253, green: 226, blue: 212)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +84,7 @@ class QuotesViewController: UIViewController {
     }
     
     private func setupViews() {
+        view.addSubview(menuButton)
         view.addSubview(quoteLabel)
         view.addSubview(buttonStackView)
         view.backgroundColor = UIColor(red: 253, green: 226, blue: 212)
@@ -83,6 +106,8 @@ class QuotesViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
+            menuButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            menuButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             quoteLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             quoteLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 27),
             quoteLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -72),
@@ -123,7 +148,6 @@ extension QuotesViewController {
         }
         
         refreshBookmarkButton()
-        presentBookmarkQuotesTableViewController()
     }
     
     private func presentBookmarkQuotesTableViewController() {

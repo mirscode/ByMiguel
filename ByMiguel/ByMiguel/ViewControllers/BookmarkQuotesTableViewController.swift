@@ -20,12 +20,11 @@ class BookmarkQuotesTableViewController: UITableViewController, BookmarkQuotesTa
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("X", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
-        button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
+        
+        let dismissImage = UIImage(systemName: "xmark.circle")
+        button.setImage(dismissImage, for: .normal)
+        button.imageView?.tintColor = .black
         return button
     }()
     
