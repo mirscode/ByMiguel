@@ -17,6 +17,7 @@
 		389E121B29789CBD00BE1F97 /* BookmarkQuotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389E121A29789CBD00BE1F97 /* BookmarkQuotesTableViewController.swift */; };
 		389E121F297D87E900BE1F97 /* BookmarkQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389E121E297D87E900BE1F97 /* BookmarkQuoteCell.swift */; };
 		389E1222297D9AAA00BE1F97 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389E1221297D9AAA00BE1F97 /* UIColor+Extension.swift */; };
+		38A85C4E29AC102A0089645C /* AddQuoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A85C4D29AC102A0089645C /* AddQuoteViewController.swift */; };
 		38B39259296FE62000BBE263 /* quotes.json in Resources */ = {isa = PBXBuildFile; fileRef = 38B39258296FE62000BBE263 /* quotes.json */; };
 		38F8D1E929A2BA640084409F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F8D1E829A2BA640084409F /* Storage.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		389E121A29789CBD00BE1F97 /* BookmarkQuotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkQuotesTableViewController.swift; sourceTree = "<group>"; };
 		389E121E297D87E900BE1F97 /* BookmarkQuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkQuoteCell.swift; sourceTree = "<group>"; };
 		389E1221297D9AAA00BE1F97 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		38A85C4D29AC102A0089645C /* AddQuoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuoteViewController.swift; sourceTree = "<group>"; };
 		38B39258296FE62000BBE263 /* quotes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = quotes.json; path = ../../../../Desktop/quotes.json; sourceTree = "<group>"; };
 		38F8D1E829A2BA640084409F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +99,7 @@
 				389E121D297D87C800BE1F97 /* Views */,
 				389A167428E2868D00B69CB7 /* QuotesViewController.swift */,
 				389E121A29789CBD00BE1F97 /* BookmarkQuotesTableViewController.swift */,
+				38A85C4D29AC102A0089645C /* AddQuoteViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				389A167128E2868D00B69CB7 /* AppDelegate.swift in Sources */,
 				389A167328E2868D00B69CB7 /* SceneDelegate.swift in Sources */,
 				389E1222297D9AAA00BE1F97 /* UIColor+Extension.swift in Sources */,
+				38A85C4E29AC102A0089645C /* AddQuoteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
