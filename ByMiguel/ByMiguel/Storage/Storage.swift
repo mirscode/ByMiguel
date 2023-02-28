@@ -5,7 +5,6 @@ class Storage {
     private let bookmarksKey = "bookmarkedQuotes"
     private let currentQuoteIndexKey = "currentQuoteIndex"
     private let myQuotesKey = "myQuotes"
-    private var myQuotesArray = [String]()
     
     func save(quoteIds: Set<Int>) {
         let quotesArray = Array(quoteIds)
@@ -25,12 +24,12 @@ class Storage {
         return storage.integer(forKey: currentQuoteIndexKey)
     }
     
-    func getAllOwnQuotes() {
-        print("hello")
+    func loadMyQuotes() -> [String] {
+        let myQuotesArray = storage.array(forKey: myQuotesKey) as? [String] ?? [String]()
+        return myQuotesArray
     }
     
-    func saveNewQuote(_ newQuoteText: String) {
-        myQuotesArray.append(newQuoteText)
-        storage.set(myQuotesArray, forKey: myQuotesKey)
+    func saveMyQuotes(_ myQuotes: [String]) {
+        storage.set(myQuotes, forKey: myQuotesKey)
     }
 }

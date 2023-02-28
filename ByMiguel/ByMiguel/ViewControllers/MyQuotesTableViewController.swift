@@ -1,20 +1,11 @@
 import UIKit
 
-protocol BookmarkQuotesTableViewControllerProtocol {
-    var quotesViewModel: QuotesViewModel? { get set }
-}
-
-class BookmarkQuotesTableViewController: UITableViewController, BookmarkQuotesTableViewControllerProtocol {
-    weak var quotesViewModel: QuotesViewModel?
+class MyQuotesTableViewController: UITableViewController {
+    private let myQuotesViewModel = MyQuotesViewModel()
+    private let cellId = "MyQuoteCellId"
     
-    private let cellId = "BookmarkQuoteCellId"
-    
-    private lazy var bookmarkedQuotes: [Quote] = {
-        if let bookmarkedQuotes = quotesViewModel?.bookmarkedQuotes {
-            return bookmarkedQuotes
-        }
-        
-        return [Quote]()
+    private lazy var myQuotes: [Quote] = {
+        return myQuotesViewModel.myQuotes
     }()
     
     override func viewDidLoad() {
@@ -25,7 +16,7 @@ class BookmarkQuotesTableViewController: UITableViewController, BookmarkQuotesTa
     private func setupViews() {
         view.backgroundColor = UIColor(red: 253, green: 226, blue: 212)
         
-        navigationItem.title = "BOOKMARKS"
+        navigationItem.title = "MY QUOTES"
         navigationController?.navigationBar.barTintColor = UIColor(red: 253, green: 226, blue: 212)
         
         let rightBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .plain, target: self, action: #selector(dismissController))
@@ -40,22 +31,22 @@ class BookmarkQuotesTableViewController: UITableViewController, BookmarkQuotesTa
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookmarkedQuotes.count
+        return myQuotes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! BaseQuoteTableViewCell
-        let bookmarkQuote = bookmarkedQuotes[indexPath.row]
-        cell.configure(quoteMessage: bookmarkQuote.message)
+        let myQuote = myQuotes[indexPath.row]
+        cell.configure(quoteMessage: myQuote.message)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-        
-        let quoteToRemove = bookmarkedQuotes[indexPath.row]
-        bookmarkedQuotes.remove(at: indexPath.row)
-        quotesViewModel?.unbookmarkQuote(quoteToRemove)
+
+        let quoteToRemove = myQuotes[indexPath.row]
+        myQuotes.remove(at: indexPath.row)
+        myQuotesViewModel.removeQuote(quoteToRemove)
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class BookmarkQuoteCell: UITableViewCell {
+class BaseQuoteTableViewCell: UITableViewCell {
     private lazy var cellContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

@@ -1,7 +1,7 @@
 import UIKit
 
 class AddQuoteViewController: UIViewController {
-    private let storage = Storage()
+    private let myQuotesViewModel = MyQuotesViewModel()
     
     private lazy var quoteTextField: UITextField = {
         let textField = UITextField()
@@ -77,7 +77,7 @@ extension AddQuoteViewController {
     
     @objc private func saveButtonPressed() {
         if let newQuoteText = quoteLabel.text {
-            storage.saveNewQuote(newQuoteText)
+            myQuotesViewModel.addQuote(quoteText: newQuoteText)
         }
 
         dismiss(animated: true)

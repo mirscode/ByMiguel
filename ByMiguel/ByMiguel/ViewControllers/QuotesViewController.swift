@@ -169,7 +169,10 @@ extension QuotesViewController {
     }
     
     private func presentMyQuotesViewController() {
-        print("Hello")
+        let myQuotesTableViewController = MyQuotesTableViewController()
+        let navigationController = UINavigationController(rootViewController: myQuotesTableViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
     
     private func presentBookmarkQuotesTableViewController() {
