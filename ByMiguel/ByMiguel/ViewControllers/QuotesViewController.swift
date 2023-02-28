@@ -61,11 +61,15 @@ class QuotesViewController: UIViewController {
             self.presentAddQuoteViewController()
         })
         
+        let showMyQuotes = UIAction(title: "Show My Quotes", handler: { (_) in
+            self.presentMyQuotesViewController()
+        })
+        
         let showBookmarks = UIAction(title: "Show Bookmarks", handler: { (_) in
             self.presentBookmarkQuotesTableViewController()
         })
         
-        return [addQuote, showBookmarks]
+        return [addQuote, showMyQuotes, showBookmarks]
     }()
     
     private lazy var menu = UIMenu(children: menuItems)
@@ -162,6 +166,10 @@ extension QuotesViewController {
         let navigationController = UINavigationController(rootViewController: addQuoteViewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
+    }
+    
+    private func presentMyQuotesViewController() {
+        print("Hello")
     }
     
     private func presentBookmarkQuotesTableViewController() {

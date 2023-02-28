@@ -17,17 +17,6 @@ class BookmarkQuotesTableViewController: UITableViewController, BookmarkQuotesTa
         return [Quote]()
     }()
     
-    private lazy var dismissButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
-        
-        let dismissImage = UIImage(systemName: "xmark.circle")
-        button.setImage(dismissImage, for: .normal)
-        button.imageView?.tintColor = .black
-        return button
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -37,28 +26,13 @@ class BookmarkQuotesTableViewController: UITableViewController, BookmarkQuotesTa
         view.backgroundColor = UIColor(red: 253, green: 226, blue: 212)
         
         navigationItem.title = "BOOKMARKS"
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.barTintColor = UIColor(red: 253, green: 226, blue: 212)
-        navigationController?.navigationBar.addSubview(dismissButton)
+        
+        let rightBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .plain, target: self, action: #selector(dismissController))
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
         
         tableView.register(BookmarkQuoteCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorStyle = .singleLine
-        
-        addConstraints()
-    }
-    
-    private func addConstraints() {
-        var constraints: [NSLayoutConstraint] = [
-            dismissButton.widthAnchor.constraint(equalToConstant: 50),
-            dismissButton.heightAnchor.constraint(equalToConstant: 50)
-        ]
-        
-        if let navigationBar = navigationController?.navigationBar {
-            constraints.append(dismissButton.trailingAnchor.constraint(equalTo: navigationBar.trailingAnchor, constant: -15))
-            constraints.append(dismissButton.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 15))
-        }
-        
-        NSLayoutConstraint.activate(constraints)
     }
     
     @objc private func dismissController() {

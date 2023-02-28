@@ -1,6 +1,8 @@
 import UIKit
 
 class AddQuoteViewController: UIViewController {
+    private let storage = Storage()
+    
     private lazy var quoteTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -25,28 +27,12 @@ class AddQuoteViewController: UIViewController {
         return label
     }()
     
-    private lazy var horizontalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [quoteTextField, saveButton])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 8
-        return stackView
-    }()
-    
     private lazy var verticalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [horizontalStackView, quoteLabel])
+        let stackView = UIStackView(arrangedSubviews: [quoteTextField, quoteLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
-    }()
-    
-    private lazy var saveButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Save", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
-        return button
     }()
     
     override func viewDidLoad() {
@@ -54,9 +40,23 @@ class AddQuoteViewController: UIViewController {
     }
     
     private func setupViews() {
+        setupNavigationView()
+        
         view.addSubview(verticalStackView)
         view.backgroundColor = UIColor(red: 253, green: 226, blue: 212)
+        
         addConstraints()
+    }
+    
+    private func setupNavigationView() {
+        navigationItem.title = "ADD QUOTE"
+        navigationController?.navigationBar.barTintColor = UIColor(red: 253, green: 226, blue: 212)
+        
+        let rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonPressed))
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonPressed))
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     private func addConstraints() {
@@ -76,7 +76,14 @@ extension AddQuoteViewController {
     }
     
     @objc private func saveButtonPressed() {
-        print("Saving your quote: \(quoteLabel.text ?? "")")
+        if let newQuoteText = quoteLabel.text {
+            storage.saveNewQuote(newQuoteText)
+        }
+
+        dismiss(animated: true)
+    }
+    
+    @objc private func cancelButtonPressed() {
         dismiss(animated: true)
     }
 }
